@@ -8,7 +8,7 @@ A complete, interactive portfolio case study that combines a sales pipeline, cus
 
 **JavaScript (ES modules)** · **HTML5** · **Modern CSS** · **Node.js** · **GitHub Actions** · **Netlify-ready**
 
-[Explore features](#at-a-glance) · [Run locally](#getting-started) · [Architecture](#architecture) · [Why this project?](#built-for-a-real-freelance-use-case)
+[Live demo](https://fieldops-service-crm.vercel.app/) · [Screenshots](#interface-screenshots) · [Explore features](#at-a-glance) · [Run locally](#getting-started) · [Architecture](#architecture) · [Why this project?](#built-for-a-real-freelance-use-case)
 
 </div>
 
@@ -27,6 +27,45 @@ A complete, interactive portfolio case study that combines a sales pipeline, cus
 | **Experience** | Mobile-responsive layout, keyboard navigation, global search (`⌘K` / `Ctrl+K`), accessible dialogs and status feedback. |
 
 > **Important:** FieldOps is a fully interactive *portfolio demo*, not a deployed multi-user SaaS. Its records are **fictional** and changes persist only in the browser's `localStorage`. It does not send emails, process payments, synchronize data or protect sensitive real customer records. There is no real authentication or server database. The interface openly labels this limitation.
+
+## Interface screenshots
+
+Real screenshots captured from the [live FieldOps demo](https://fieldops-service-crm.vercel.app/) on **November 11, 2026**. All people, companies, amounts and records below are the project's built-in **fictional demo data**. These are captures of the working interface, not mockups.
+
+### Operations overview
+
+Pipeline value, secured revenue, active jobs and follow-up indicators, alongside the demo revenue chart and sales-stage breakdown.
+
+![FieldOps operations overview with four metrics, a revenue chart and pipeline breakdown](docs/screenshots/01-overview.jpg)
+
+<details>
+<summary><strong>Sales pipeline — opportunities by stage</strong></summary>
+
+The Kanban board groups opportunities into new inquiries, qualified leads, proposals and won deals, with values and follow-up dates.
+
+![FieldOps sales pipeline with opportunity cards grouped into four sales stages](docs/screenshots/02-pipeline.jpg)
+
+</details>
+
+<details>
+<summary><strong>Estimate details — line items, tax and totals</strong></summary>
+
+The estimate drawer shows itemized work, quantities, unit prices, tax and approval status. The browser's print flow provides the PDF export.
+
+![FieldOps estimate drawer showing a fictional kitchen renovation quote with line items and calculated totals](docs/screenshots/03-estimate.jpg)
+
+</details>
+
+<details>
+<summary><strong>Jobs and scheduling — delivery status and checklists</strong></summary>
+
+Scheduled and in-progress jobs display their dates, customers, task progress and status controls.
+
+![FieldOps jobs workspace with scheduled and in-progress work, dates and task checklists](docs/screenshots/04-jobs.jpg)
+
+</details>
+
+[Capture details and reproduction steps](docs/screenshots/README.md).
 
 ## Built for a real freelance use case
 
@@ -60,7 +99,11 @@ npm run build  # produces dist/ with the static site
 npm run check  # tests + build
 ```
 
-### Deploy to Netlify
+### Deployment
+
+The public demo is hosted on **[Vercel](https://fieldops-service-crm.vercel.app/)**. The build outputs a static `dist/` directory and does not require environment variables.
+
+#### Deploy to Netlify
 
 The included `netlify.toml` configures:
 
