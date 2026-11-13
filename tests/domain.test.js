@@ -61,3 +61,18 @@ test('seed has cross-linked fictional business records and reports them', () => 
   assert.ok(m.wonValue > 0);
   assert.ok(m.overdue >= 1);
 });
+
+test('quote inputs reject malformed amounts, non-finite values and fractional quantities', () => {
+  const base = { customerId: 'c1', title: 'On-site service', taxPercent: '8' };
+  const validLine = { description: 'Inspection', quantity: '2', unitDollars: '25.50' };
+  for (const invalid of ['', 'not-a-number', 'Infinity', Infinity, null]) {
+    assert.throws(() => createQuote({ ...base, items: [{ ...validLine, unitDollars: invalid }] }, 'bad-price'), /Check quantity and price/);
+    assert.throws(() => createQuote({ ...base, items: [{ ...validLine, quantity: invalid }] }, 'bad-quantity'), /Check quantity and price/);
+    assert.throws(() => createQuote({ ...base, items: [validLine], taxPercent: invalid }, 'bad-tax'), /Tax rate/);
+  }
+  assert.throws(() => createQuote({ ...base, items: [{ ...validLine, quantity: '1.5' }] }, 'fractional'), /Check quantity and price/);
+  const quote = createQuote({ ...base, items: [{ ...validLine, unitDollars: '0' }], taxPercent: '0' }, 'free');
+  assert.equal(quote.items[0].unitCents, 0);
+  assert.equal(quote.items[0].quantity, 2);
+  assert.equal(quote.taxPercent, 0);
+});
