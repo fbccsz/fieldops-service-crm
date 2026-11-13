@@ -81,15 +81,22 @@ export function createQuote(input, id = crypto.randomUUID()) {
   const title = requiredString(input.title, 'Quote title', 140);
   const items = (input.items || []).filter(item => normalizeText(item.description));
   if (!items.length) throw Error('Add at least one item');
+  // Unlike safeNumber(), invalid form values must not silently become free items.
+  const parseQuoteNumber = value => (
+    value == null || (typeof value === 'string' && !value.trim()) ? NaN : Number(value)
+  );
   const normalized = items.map(item => ({
     id: crypto.randomUUID(),
     description: requiredString(item.description, 'Line item', 140),
-    quantity: Math.floor(safeNumber(item.quantity)),
-    unitCents: Math.round(safeNumber(item.unitDollars) * 100),
+    quantity: parseQuoteNumber(item.quantity),
+    unitCents: Math.round(parseQuoteNumber(item.unitDollars) * 100),
   }));
-  if (normalized.some(item => item.quantity < 1 || item.quantity > 10000 || item.unitCents < 0 || item.unitCents > 100000000)) throw Error('Check quantity and price');
-  const taxPercent = safeNumber(input.taxPercent);
-  if (taxPercent < 0 || taxPercent > 100) throw Error('Tax rate must be between 0 and 100');
+  if (normalized.some(item =>
+    !Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > 10000 ||
+    !Number.isFinite(item.unitCents) || item.unitCents < 0 || item.unitCents > 100000000
+  )) throw Error('Check quantity and price');
+  const taxPercent = input.taxPercent === undefined ? 0 : parseQuoteNumber(input.taxPercent);
+  if (!Number.isFinite(taxPercent) || taxPercent < 0 || taxPercent > 100) throw Error('Tax rate must be between 0 and 100');
   return { id, number: `EST-${Date.now().toString().slice(-6)}`, customerId, title, items: normalized, taxPercent, status: 'draft', createdAt: todayISO(), dueAt: addDays(14) };
 }
 export function createJob(input, id = crypto.randomUUID()) {
