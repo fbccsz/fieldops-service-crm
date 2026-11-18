@@ -2,6 +2,11 @@
 
 # FIELDOPS
 
+[![CI](https://github.com/fbccsz/fieldops-service-crm/actions/workflows/ci.yml/badge.svg)](https://github.com/fbccsz/fieldops-service-crm/actions/workflows/ci.yml)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES2024-F7DF1E?logo=javascript&logoColor=000)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-zero_dependencies-E8D44D?logo=javascript&logoColor=000)](http://vanilla-js.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 **A service-business command center, designed for the work behind the work.**
 
 A complete, interactive portfolio case study that combines a sales pipeline, customer directory, itemized estimates, job scheduling and operational reporting in one responsive workspace.
@@ -176,7 +181,47 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ROADMAP.md](docs/ROAD
 
 ## Português
 
-**FieldOps é um painel de operações para empresas de serviços.** Demonstra cadastro de clientes, funil comercial, orçamentos com itens e impostos, agendamento de trabalhos, checklists, indicadores e exportação de dados. Os registros apresentados são **fictícios**, persistidos apenas no navegador. É um **case de portfólio**, não um CRM SaaS com backend ou segurança multiusuário. O projeto foi inspirado em descrições públicas de demandas reais de freelas, sem copiar nenhum produto de terceiros.
+**FieldOps é um painel de operações para empresas de serviços de campo.** Um case de portfólio completo e interativo que combina funil de vendas, cadastro de clientes, orçamentos detalhados, agendamento de trabalhos e relatórios operacionais em um workspace responsivo.
+
+> **Nota:** Este é um projeto de portfólio — os dados são **fictícios** e persistidos apenas no `localStorage` do navegador. Não se trata de um CRM SaaS multi-usuário com backend real.
+
+### Funcionalidades
+
+| Área | O que você pode fazer |
+| --- | --- |
+| **Painel geral** | Acompanhar valor do pipeline, receita garantida, trabalhos ativos e follow-ups pendentes. |
+| **Funil comercial (Kanban)** | Criar oportunidades, definir datas de follow-up, arrastar cards entre etapas e editar negócios. |
+| **Clientes** | Cadastrar clientes, buscar contatos e visualizar oportunidades e orçamentos vinculados. |
+| **Orçamentos** | Montar cotações com itens, quantidade, preço unitário e impostos. Alterar status e exportar como PDF. |
+| **Trabalhos e agenda** | Agendar serviços, acompanhar checklists de tarefas, atualizar status e revisar próximos trabalhos. |
+| **Configurações** | Exportar backup JSON, resetar a demo e entender o que é armazenado localmente. |
+
+### Como rodar localmente
+
+```bash
+git clone https://github.com/fbccsz/fieldops-service-crm.git
+cd fieldops-service-crm
+npm ci
+npm run dev
+```
+
+Acesse **http://localhost:4173**. Requisito: **Node.js 20+**. Zero dependências externas de runtime.
+
+### Verificação de qualidade
+
+```bash
+npm test       # testes com runner nativo do Node.js
+npm run build  # gera dist/ com o site estático
+npm run check  # testes + build
+```
+
+### Arquitetura
+
+JavaScript vanilla com ES modules, sem frameworks ou bundlers externos. Os dados financeiros utilizam centavos inteiros com arredondamento explícito. Toda mutação de estado passa por `transact()`, que persiste os dados e atualiza a UI automaticamente. O projeto inclui CI via GitHub Actions e está pronto para deploy em Vercel, Netlify ou qualquer host estático.
+
+### Contexto do projeto
+
+O FieldOps foi inspirado em descrições públicas de demandas reais de freelancers (Upwork, Workana) para sistemas de gestão de serviços. Demonstra UI, lógica de negócio, relacionamento entre entidades e qualidade de entrega relevantes para esse tipo de projeto — sem copiar nenhum produto de terceiros.
 
 ## License
 
